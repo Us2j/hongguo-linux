@@ -1,0 +1,37 @@
+# 文档（本地规划笔记，不入库）
+docs/
+
+# 依赖
+node_modules/
+
+# 构建产物
+renderer/dist/
+/release/
+signer/out/
+
+# 运行时资源（打包时注入，体积大）
+resources/jre/
+resources/ffmpeg/
+
+# 日志与缓存
+*.log
+cache/
+
+# 本地设备 / 身份数据
+config/device.json
+config/device_export.json
+config/device.backup.*.json
+config/devices/
+config/backups/
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 专有/第三方运行资源（公开仓库不提交）
+signer/lib/*.so
+signer/lib/*.bin
+vendor/**/*.jar
+vendor/**/*.so
+resources/ffmpeg
+resources/seed/

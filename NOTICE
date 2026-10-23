@@ -1,0 +1,148 @@
+hongguo-linux
+Copyright (c) 2026 hongguo-linux contributors
+
+The public repository does NOT include the proprietary/third-party binaries
+listed below. They are optional local assets that the user must obtain
+separately (see `vendor/README.md`, `signer/lib/README.md`,
+`resources/README.md`). If you restore them locally, the following attribution
+and license terms apply. This NOTICE is not legal advice.
+
+The MIT license in `LICENSE` applies only to original source code authored by
+the hongguo-linux contributors. It does not apply to any file listed below.
+
+===============================================================================
+1. FFmpeg static binary
+===============================================================================
+
+File (not included in public repo):
+  resources/ffmpeg
+
+License:
+  GNU General Public License, version 3 (GPL-3.0)
+
+This is a statically linked FFmpeg 7.0.2 build configured with
+`--enable-gpl --enable-version3`, including GPL components such as x264 and
+x265. Distribution of this binary requires compliance with the GPL, including
+making the corresponding source code available.
+
+Upstream / source:
+  https://ffmpeg.org/
+  https://ffmpeg.org/download.html
+  https://johnvansickle.com/ffmpeg/
+
+The full GPL-3.0 text is in `LICENSES/GPL-3.0.txt`.
+
+If you do not want to comply with GPL source-distribution obligations, remove
+`resources/ffmpeg` before publishing and let users install FFmpeg themselves.
+
+===============================================================================
+2. unidbg and bundled Java dependencies
+===============================================================================
+
+File (not included in public repo):
+  vendor/unidbg-libs.jar
+
+This jar is a repacked collection of third-party dependencies used by the
+local signing harness. It contains, among others:
+
+  - unidbg-api / unidbg-android / unidbg-unicorn2
+      License: Apache-2.0 (upstream unidbg project)
+  - Capstone (Java binding)
+      License: BSD (see upstream)
+  - Unicorn / Keystone / Demumble
+      License: GPL-2.0 (as declared in their Maven metadata)
+  - fastjson
+      License: Apache-2.0
+  - SLF4J API / simple
+      License: MIT
+  - Apache Commons Codec / IO / Collections4
+      License: Apache-2.0
+  - apk-parser
+      License: BSD-2-Clause
+  - JNA
+      License: LGPL-2.1-or-later OR Apache-2.0 (dual-licensed)
+  - native-lib-loader
+      License: Simplified BSD / BSD-2-Clause
+  - other transitive dependencies
+      See `META-INF/` inside the jar for their notices.
+
+The full texts we ship are in `LICENSES/`:
+
+  Apache-2.0.txt
+  GPL-2.0.txt
+  LGPL-2.1.txt
+  BSD-2-Clause.txt
+  BSD-3-Clause.txt
+  MIT.txt
+
+If you redistribute this jar, keep its `META-INF` license/notice files, include
+the corresponding license texts, and satisfy any GPL/LGPL source-offer
+obligations. If that is not practical, remove the jar from public distribution
+and provide a build/fetch script instead.
+
+===============================================================================
+3. libc++ shared library
+===============================================================================
+
+Files (not included in public repo):
+  signer/lib/libc++_shared.so
+  vendor/signer/capture/fq_oversea/libc++_shared.so
+
+License:
+  Apache-2.0 WITH LLVM-exception
+
+See `LICENSES/Apache-2.0.txt` and `LICENSES/LLVM-exception.txt`.
+
+===============================================================================
+4. ByteDance / Hongguo proprietary binary
+===============================================================================
+
+Files (not included in public repo):
+  signer/lib/libmetasec_ml.so
+  vendor/signer/capture/fq_oversea/libmetasec_ml.so
+
+Status:
+  Proprietary. No license is granted by this project.
+
+This library is extracted from the Hongguo Android application. It must not be
+committed to a public repository. If you restore it locally for study, it is
+NOT open source, NOT covered by the MIT license, and must NOT be redistributed
+publicly without permission from the rights holder.
+
+If you publish this repository, remove these files and let users extract the
+library from their own legally obtained copy of the app.
+
+===============================================================================
+5. Third-party signing jar
+===============================================================================
+
+File (not included in public repo):
+  vendor/signer/sign/unidbg-sign.jar
+
+Status:
+  Contains classes under `com/hongguo/sign/` from a third-party project.
+  The license and redistribution permission are unknown.
+
+It is NOT covered by this project's MIT license. Do not publish or redistribute
+it unless you have verified its license and have permission to do so.
+
+The project's own harness is in `signer/src/dev/hongguo/sign/MetasecHarness.java`
+and does not require this jar to be redistributed.
+
+===============================================================================
+6. Names and trademarks
+===============================================================================
+
+"红果", "Hongguo", "ByteDance", "抖音" and related names are trademarks of their
+respective owners. This project is not affiliated with, endorsed by, or
+sponsored by ByteDance or Hongguo.
+
+===============================================================================
+7. Source and license texts
+===============================================================================
+
+The full license texts are in `LICENSES/`. See `LICENSES/README.md` for a
+mapping between files/components and licenses.
+
+If you believe a file in this repository infringes your rights, please open an
+issue or contact the repository owner so it can be reviewed and removed.

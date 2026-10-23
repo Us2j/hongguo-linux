@@ -1,0 +1,103 @@
+{
+  "name": "hongguo-linux",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "红果短剧 Linux 桌面版（匿名 / 推荐 / 搜索 / 1080p）",
+  "homepage": "https://local/hongguo",
+  "author": "hongguo",
+  "main": "electron/main.js",
+  "scripts": {
+    "feed": "node bin/hongguo.mjs feed",
+    "search": "node bin/hongguo.mjs search",
+    "build:signer": "bash signer/build.sh",
+    "test:spade": "node tools/test/test_spade.mjs",
+    "test:hls": "node tools/test/test_hls.mjs",
+    "watch:headless": "node bin/watch.mjs feed --limit 1 --headless",
+    "dev:renderer": "vite",
+    "dev:electron": "wait-on tcp:5173 && cross-env ELECTRON_RUN_AS_NODE= ELECTRON_RENDERER_URL=http://localhost:5173 electron .",
+    "dev": "concurrently -k -n vite,electron -c cyan,magenta \"npm:dev:renderer\" \"npm:dev:electron\"",
+    "build:renderer": "vite build",
+    "build:jre": "rm -rf resources/jre && jlink --add-modules java.base,java.logging,java.management,java.naming,java.xml,java.desktop,java.sql,java.security.jgss,java.scripting,jdk.httpserver,jdk.unsupported,jdk.crypto.ec --strip-debug --no-header-files --no-man-pages --compress zip-6 --output resources/jre",
+    "start": "npm run build:renderer && cross-env ELECTRON_RUN_AS_NODE= electron .",
+    "dist": "npm run build:renderer && electron-builder",
+    "package": "bash tools/build/package.sh",
+    "package:local": "bash tools/build/package.sh local",
+    "package:user": "bash tools/build/package.sh user",
+    "release": "bash tools/release/publish-release.sh",
+    "identity": "node tools/device/identity.mjs",
+    "device:export": "node tools/device/register.mjs --from-device",
+    "device:show": "node tools/device/register.mjs --show",
+    "device:emulator": "bash tools/device/register_emulator.sh",
+    "build:linux": "bash tools/build/build-linux.sh",
+    "device:register": "bash tools/device/register-device.sh"
+  },
+  "build": {
+    "appId": "com.hongguo.linux",
+    "productName": "Hongguo",
+    "directories": {
+      "output": "release"
+    },
+    "asar": true,
+    "files": [
+      "electron/**/*",
+      "renderer/dist/**/*",
+      "services/**/*",
+      "package.json",
+      "LICENSE",
+      "NOTICE",
+      "LICENSES/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "signer/out",
+        "to": "signer/out"
+      },
+      {
+        "from": "signer/lib",
+        "to": "signer/lib"
+      },
+      {
+        "from": "vendor/unidbg-libs.jar",
+        "to": "vendor/unidbg-libs.jar"
+      },
+      {
+        "from": "resources/jre",
+        "to": "jre"
+      },
+      {
+        "from": "resources/ffmpeg",
+        "to": "ffmpeg"
+      },
+      {
+        "from": "resources/seed",
+        "to": "seed"
+      }
+    ],
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "AudioVideo",
+      "maintainer": "hongguo <noreply@local>",
+      "artifactName": "${productName}-${version}.${ext}"
+    },
+    "afterPack": "./build/afterPack.cjs"
+  },
+  "dependencies": {
+    "hls.js": "^1.5.17"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.0",
+    "cross-env": "^7.0.3",
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8",
+    "ffmpeg-static": "^5.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vite": "^5.4.11",
+    "wait-on": "^8.0.1"
+  }
+}
